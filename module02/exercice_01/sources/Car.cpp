@@ -33,7 +33,7 @@ Car::Car(const Car& to_copy)
 }
 
 // Move constructor (shallow transfer)
-Car::Car(Car&& to_move)
+Car::Car(Car&& to_move) noexcept
     : _engine(to_move._engine), _transmission(to_move._transmission),
       _breaks(to_move._breaks), _wheels(to_move._wheels)
 {
@@ -70,7 +70,7 @@ Car& Car::operator=(const Car& to_copy)
 }
 
 // Move assignment
-Car& Car::operator=(Car&& to_move)
+Car& Car::operator=(Car&& to_move) noexcept
 {
     if (this == &to_move)
         return *this;

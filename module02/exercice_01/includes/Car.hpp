@@ -8,9 +8,9 @@ class Car
 {
     public:
         Car();
-        Car(Car&&);
+        Car(Car&&) noexcept;
         Car(const Car&);
-        Car& operator=(Car&&);
+        Car& operator=(Car&&) noexcept;
         Car& operator=(const Car&);
         ~Car();
 
