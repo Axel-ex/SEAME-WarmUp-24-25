@@ -29,6 +29,6 @@ To build this project using CMake, follow these steps:
 
 4. **Run Tests**: If there is a test folder, then run:
    ```bash
-   ./build/my_car_tests
+   ./build/test/my_car_tests
    ```
 

@@ -23,6 +23,7 @@ class PhoneBook
         void _bookmark(void);
 
         // CHECKS
+        bool _isInteger(const std::string& str);
         bool _isValidContact(const Contact& contact) const;
         bool _isValidIndex(size_t index) const;
         bool _isValidPhoneNumber(const std::string& phone_nb) const;

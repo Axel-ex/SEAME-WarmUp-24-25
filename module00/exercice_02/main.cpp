@@ -2,8 +2,18 @@
 #include <iostream>
 #include <string>
 
+void print_usage(void)
+{
+    std::cout << "Invalid number of arguments provided: ./convert "
+              << std::endl;
+    exit(EXIT_FAILURE);
+}
+
 int main(int argc, char** argv)
 {
+    if (argc <= 3)
+        print_usage();
+
     std::string command = argv[1];
     std::string str = argv[2];
 
