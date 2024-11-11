@@ -3,7 +3,7 @@
 
 Contact::Contact(const std::string& name, const std::string& nickname,
                  const std::string& phone_nb)
-    : _name(name), _nickname(nickname), _phone_nb(phone_nb)
+    : _name(name), _phone_nb(phone_nb), _nickname(nickname)
 {
 }
 
