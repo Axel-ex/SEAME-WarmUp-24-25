@@ -203,7 +203,7 @@ bool PhoneBook::_isValidPhoneNumber(const std::string& input) const
 
 bool PhoneBook::_isValidIndex(size_t index) const
 {
-    return index >= 0 && index < _contacts.size();
+    return index < _contacts.size();
 }
 
 /**
