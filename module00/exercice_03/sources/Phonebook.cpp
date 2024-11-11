@@ -1,5 +1,7 @@
 #include "PhoneBook.hpp"
+#include "Contact.hpp"
 #include "Formatter.hpp"
+#include <algorithm>
 #include <cstddef>
 #include <cstdlib>
 #include <iostream>
@@ -136,7 +138,7 @@ void PhoneBook::_remove(void)
 
     // Treat input as index and remove if valid
     size_t index = std::atoi(input.c_str());
-    if (_isValidIndex(index))
+    if (_isValidIndex(index) && _isInteger(input))
         _removeContact(_contacts.begin() + index);
     else
     {
@@ -203,7 +205,7 @@ bool PhoneBook::_isValidPhoneNumber(const std::string& input) const
 
 bool PhoneBook::_isValidIndex(size_t index) const
 {
-    return index >= 0 && index < _contacts.size();
+    return index < _contacts.size();
 }
 
 /**
@@ -213,6 +215,21 @@ void PhoneBook::_removeContact(std::vector<Contact>::iterator it)
 {
     std::string contact_name = it->getName();
     _contacts.erase(it);
+
+    // Find and remove the contact from the bookmarked list
+    auto bookmarked_it = std::find_if(
+        _bookmarked.begin(), _bookmarked.end(), [&](const Contact& contact)
+        { return contact.getName() == contact_name; });
+
+    if (bookmarked_it != _bookmarked.end())
+        _bookmarked.erase(bookmarked_it);
+
     std::cout << contact_name << " successfully deleted!" << std::endl;
     Formatter::pressEnter();
+}
+
+// Check if input is a valid integer
+bool PhoneBook::_isInteger(const std::string& str)
+{
+    return !str.empty() && std::all_of(str.begin(), str.end(), ::isdigit);
 }
