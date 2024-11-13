@@ -15,18 +15,22 @@ public:
     explicit ContactEdit(QWidget *parent = nullptr);
     ~ContactEdit();
 
-    // Getter methods to retrieve user input
     QString getFirstName() const;
     QString getLastName() const;
     QString getPhoneNumber() const;
 
-    // Setter methods to pre-fill the form for editing
     void setFirstName(const QString &firstName);
     void setLastName(const QString &lastName);
     void setPhoneNumber(const QString &phoneNumber);
 
+private slots:
+    void onAccept();
+
 private:
     Ui::ContactEdit *ui;
+
+    bool validateFirstName();
+    bool validatePhoneNumber();
 };
 
 #endif // CONTACTEDIT_HPP

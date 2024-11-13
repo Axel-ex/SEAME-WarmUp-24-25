@@ -13,6 +13,7 @@ class Phonebook : public QMainWindow
 
 public:
     explicit Phonebook(QWidget *parent = nullptr);
+    bool isPhoneNumberDuplicate(const QString &phoneNumber);
     ~Phonebook();
 
 private slots:

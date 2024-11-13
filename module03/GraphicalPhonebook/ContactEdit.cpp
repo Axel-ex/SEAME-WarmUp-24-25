@@ -1,5 +1,6 @@
 #include "ContactEdit.hpp"
 #include "ui_contactedit.h"
+#include <QMessageBox>
 
 ContactEdit::ContactEdit(QWidget *parent) :
     QDialog(parent),
@@ -7,8 +8,8 @@ ContactEdit::ContactEdit(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    // Connect the dialog's buttonBox to accept and reject signals
-    connect(ui->buttonBox, &QDialogButtonBox::accepted, this, &QDialog::accept);
+    // Manually handle the acceptance of the dialog
+    connect(ui->buttonBox, &QDialogButtonBox::accepted, this, &ContactEdit::onAccept);
     connect(ui->buttonBox, &QDialogButtonBox::rejected, this, &QDialog::reject);
 }
 
@@ -17,7 +18,6 @@ ContactEdit::~ContactEdit()
     delete ui;
 }
 
-// Getter methods
 QString ContactEdit::getFirstName() const {
     return ui->textEdit->toPlainText();
 }
@@ -30,7 +30,6 @@ QString ContactEdit::getPhoneNumber() const {
     return ui->textEdit_3->toPlainText();
 }
 
-// Setter methods to pre-fill form fields for editing
 void ContactEdit::setFirstName(const QString &firstName) {
     ui->textEdit->setText(firstName);
 }
@@ -42,3 +41,37 @@ void ContactEdit::setLastName(const QString &lastName) {
 void ContactEdit::setPhoneNumber(const QString &phoneNumber) {
     ui->textEdit_3->setText(phoneNumber);
 }
+
+void ContactEdit::onAccept()
+{
+    if (!validateFirstName()) {
+        QMessageBox::warning(this, "Validation Error", "First name can't be empty!");
+        reject();
+        return;
+    }
+
+    if (!validatePhoneNumber()) {
+        QMessageBox::warning(this, "Validation Error", "Invalid Phone Number!");
+        reject();
+        return;
+    }
+    accept();
+}
+
+bool ContactEdit::validateFirstName()
+{
+    return !getFirstName().trimmed().isEmpty();
+}
+
+bool ContactEdit::validatePhoneNumber() {
+    QString phoneNumber = getPhoneNumber().trimmed();
+
+    if (phoneNumber.isEmpty()) {
+        return false;
+    }
+
+    bool isValid = phoneNumber.toInt() != 0 || phoneNumber == "0";
+
+    return isValid;
+}
+
